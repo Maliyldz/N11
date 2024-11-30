@@ -27,6 +27,9 @@
           <li>
             <NuxtLink to="/Login">Login</NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="/Carousel">Carousel</NuxtLink>
+          </li>
         </ul>
       </div>
   
