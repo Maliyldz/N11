@@ -30,6 +30,9 @@
           <li>
             <NuxtLink to="/Carousel">Carousel</NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="/ProductSlider">ProductSlider</NuxtLink>
+          </li>
         </ul>
       </div>
   
