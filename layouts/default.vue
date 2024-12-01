@@ -33,6 +33,9 @@
           <li>
             <NuxtLink to="/Navbar">Navbar</NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="/ProductSlider">ProductSlider</NuxtLink>
+          </li>
         </ul>
       </div>
   
