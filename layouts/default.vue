@@ -22,13 +22,16 @@
       <ul class="list-unstyled p-3">
         
         <li>
-          <NuxtLink to="/"></NuxtLink>
+          <NuxtLink to="/" background="red"></NuxtLink>
         </li>
           <li>
             <NuxtLink to="/Login">Login</NuxtLink>
           </li>
           <li>
             <NuxtLink to="/Carousel">Carousel</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/Navbar">Navbar</NuxtLink>
           </li>
         </ul>
       </div>
