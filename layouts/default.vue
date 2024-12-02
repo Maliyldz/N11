@@ -36,6 +36,9 @@
           <li>
             <NuxtLink to="/ProductSlider">ProductSlider</NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="/Footer">Footer</NuxtLink>
+          </li>    
         </ul>
       </div>
   
