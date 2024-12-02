@@ -38,6 +38,9 @@
           </li>
           <li>
             <NuxtLink to="/Footer">Footer</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/FilterMenu">FilterMenu</NuxtLink>
           </li>    
         </ul>
       </div>
