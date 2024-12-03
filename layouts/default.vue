@@ -41,7 +41,10 @@
           </li>
           <li>
             <NuxtLink to="/FilterMenu">FilterMenu</NuxtLink>
-          </li>    
+          </li>
+          <li>
+            <NuxtLink to="/ShoppingCart">ShoppingCart</NuxtLink>
+          </li>
         </ul>
       </div>
   
