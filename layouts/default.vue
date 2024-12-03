@@ -45,6 +45,9 @@
           <li>
             <NuxtLink to="/ShoppingCart">ShoppingCart</NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="/ProductPage">ProductPage</NuxtLink>
+          </li>
         </ul>
       </div>
   

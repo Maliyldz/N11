@@ -66,6 +66,20 @@
                 </div>
             </section>
 
+            <!-- Mağaza Puanı (Slider Bileşeni) -->
+            <section class="slider-section">
+                <h6>Mağaza Puanı</h6>
+                <div class="slider-container">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span>0</span>
+                        <input id="store-rating" type="range" class="form-range" min="0" max="10" step="1"
+                            v-model="storeRating" />
+                        <span>10</span>
+                    </div>
+                    <p class="text-end">{{ storeRatingText }}</p>
+                </div>
+            </section>
+
             <!-- Markalar -->
             <section class="dropdown-section">
                 <button class="btn dropdown-toggle custom-btn w-100" type="button" @click="toggleDropdown('brands')">
@@ -89,21 +103,6 @@
                     </div>
                 </ul>
             </section>
-
-            <!-- Mağaza Puanı (Slider Bileşeni) -->
-            <section class="slider-section">
-                <h6>Mağaza Puanı</h6>
-                <div class="slider-container">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <span>0</span>
-                        <input id="store-rating" type="range" class="form-range" min="0" max="10" step="1"
-                            v-model="storeRating" />
-                        <span>10</span>
-                    </div>
-                    <p class="text-end">{{ storeRatingText }}</p>
-                </div>
-            </section>
-
         </div>
     </div>
 </template>
