@@ -59,34 +59,24 @@
 
           <!-- Square Okları -->
           <button class="square-nav-btn prev" @click="moveSquareLeft" v-show="currentSquareIndex > 0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-              <path fill-rule="evenodd"
-                d="M11.354 1.146a.5.5 0 0 1 0 .708L5.207 8l6.147 6.146a.5.5 0 0 1-.708.708l-6.5-6.5a.5.5 0 0 1 0-.708l6.5-6.5a.5.5 0 0 1 .708 0z" />
-            </svg>
+            <i class="bi bi-chevron-compact-right"></i>
           </button>
 
           <button class="square-nav-btn next" @click="moveSquareRight"
             v-show="currentSquareIndex < squares.length - visibleSquareCount">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-              <path fill-rule="evenodd"
-                d="M4.646 1.146a.5.5 0 0 1 .708 0l6.5 6.5a.5.5 0 0 1 0 .708l-6.5-6.5a.5.5 0 0 1-.708-.708L10.793 8 4.646 1.854a.5.5 0 0 1 0-.708z" />
-            </svg>
+            <i class="bi bi-chevron-compact-right"></i>
           </button>
         </div>
 
         <!-- Carousel Okları -->
         <button @click="moveCarouselLeft" class="carousel-btn prev" v-show="currentIndex > 0">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-            <path fill-rule="evenodd"
-              d="M11.354 1.146a.5.5 0 0 1 0 .708L5.207 8l6.147 6.146a.5.5 0 0 1-.708.708l-6.5-6.5a.5.5 0 0 1 0-.708l6.5-6.5a.5.5 0 0 1 .708 0z" />
-          </svg>
+          <i class="bi bi-chevron-compact-left"></i>
         </button>
         <button @click="moveCarouselRight" class="carousel-btn next"
           v-show="currentIndex < products.length - visibleCount">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+          <i class="bi bi-chevron-compact-right"></i>
             <path fill-rule="evenodd"
               d="M4.646 1.146a.5.5 0 0 1 .708 0l6.5 6.5a.5.5 0 0 1 0 .708l-6.5-6.5a.5.5 0 0 1-.708-.708L10.793 8 4.646 1.854a.5.5 0 0 1 0-.708z" />
-          </svg>
         </button>
       </div>
     </div>

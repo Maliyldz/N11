@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex justify-content-start">
-        <div class="sidebar-container position-fixed shadow p-2 mt-5 ms-5">
+        <div class="sidebar-container position-relative shadow p-2 mt-5 ms-5">
             <!-- Sidebar içeriği -->
             <!-- Arama Çubuğu -->
             <div class="input-group mb-3">
