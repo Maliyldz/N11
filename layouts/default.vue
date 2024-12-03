@@ -1,14 +1,14 @@
 <template>
     <div>
       <!-- Üst kısmı -->
-      <header class="d-flex align-items-center bg-primary text-white p-3">
+      <header class="d-flex align-items-center text-white p-3">
         <!-- Buton ve Menü -->
         <div class="d-flex align-items-center">
           <button
             class="btn btn-light me-3 toggle-btn"
             @click="toggleSidebar"
             :class="{ 'toggle-btn-shifted': isSidebarOpen }"
-          >
+          ><i class="bi bi-list"></i>
           </button>
           
         </div>
@@ -48,6 +48,12 @@
           <li>
             <NuxtLink to="/ProductPage">ProductPage</NuxtLink>
           </li>
+          <li>
+            <NuxtLink to="/Favorites">Favorites</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/ProductMenu">ProductMenu</NuxtLink>
+          </li>
         </ul>
       </div>
   
@@ -70,6 +76,11 @@
   </script>
   
   <style scoped>
+
+  header {
+    height: 80px;
+  }
+
   /* Sidebar */
   .sidebar {
     width: 250px;
@@ -82,17 +93,21 @@
     transform: translateX(0);
   }
   
-  /* Butonun hareketi */
   .toggle-btn {
-    position: fixed;
-    left: 10px;
-    transition: left 0.3s ease;
-    z-index: 1100;
-    /* Buton boyutları */
-    width: 50px; /* Genişlik */
-    height: 25px; /* Yükseklik */
-    
-  }
+  position: fixed;
+  left: 10px;
+  top: 10px; /* Üstten biraz boşluk verir */
+  display: flex; /* Flexbox kullanımı */
+  align-items: center; /* Dikey olarak ortalar */
+  justify-content: center; /* Yatay olarak ortalar */
+  transition: left 0.3s ease;
+  z-index: 1100;
+
+  /* Buton boyutları */
+  width: 50px; /* Genişlik */
+  height: 50px; /* Yükseklik (Yüksekliği genişliğe uygun hale getirin) */
+  border-radius: 50%; /* Butonu dairesel yapar */
+}
   
   .toggle-btn-shifted {
     left: 260px; /* Sidebar genişliği + küçük bir boşluk */
@@ -103,5 +118,26 @@
     margin-left: 250px;
     transition: margin-left 0.3s ease;
   }
+
+  .bi-list {
+    font-size: 1.5rem;
+    color: #5D3EBC;
+  }
+
+  .d-flex {
+    background-color: orange;
+  }
+
+  a {
+    color: #5D3EBC;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: black;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
   </style>
   
