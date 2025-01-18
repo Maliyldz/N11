@@ -5,19 +5,19 @@
       <div class="col-2 left-panel d-flex flex-column">
         <!-- Menü Seçenekleri -->
         <div class="menu-header">
-  <h6>Merhaba, Volkan <i class="bi bi-moon-fill" style="color: gray;"></i></h6>
-  <div class="menu-status">
-    <div class="menu-item">
-      <img src="/Icons/Picture_10.jpg"> 0 Kupon
-    </div>
-    <div class="menu-icon">
-      <i class="bi bi-chevron-compact-right"></i>
-    </div>
-    <div class="menu-item">
-      <img src="/Icons/Picture_11.jpg"> 0 Uçuç Puan
-    </div>
-  </div>
-</div>
+          <h6>Merhaba, Mehmet Ali 👋</h6>
+          <div class="menu-status">
+            <div class="menu-item">
+              <img src="/Icons/Picture_10.jpg"> 0 Kupon
+            </div>
+            <div class="menu-icon">
+              <i class="bi bi-chevron-compact-right"></i>
+            </div>
+            <div class="menu-item">
+              <img src="/Icons/Picture_11.jpg"> 0 Uçuç Puan
+            </div>
+          </div>
+        </div>
 
         <div class="menu-list">
           <ul class="list-group list-group-flush">
@@ -49,7 +49,6 @@
           <ul class="category-tabs">
             <li v-for="category in Object.keys(groupedProducts)" :key="category"
               :class="{ active: selectedCategory === category }" @click="selectedCategory = category">
-              <!-- Dinamik İkon ve Kategori İsmi -->
               <i :class="categoryIcons[category]" style="margin-right: 8px;"></i> {{ category }}
             </li>
           </ul>
@@ -59,7 +58,8 @@
         <div class="tab-content">
           <!-- Seçilen Kategorideki Ürünler -->
           <div class="product-list">
-            <div v-for="(product, index) in groupedProducts[selectedCategory]" :key="index" class="product-card d-flex">
+            <div v-for="(product, index) in groupedProducts[selectedCategory]" :key="product.id"
+              class="product-card d-flex">
               <!-- Sol Kısım (Ürün Resmi ve Bilgileri) %60 -->
               <div class="product-details col-6 d-flex position-relative">
                 <img :src="product.image" class="product-image" :alt="product.name" />
@@ -68,15 +68,14 @@
                   <!-- Yıldız Değerlendirmesi -->
                   <div class="product-rating">
                     <span v-for="star in 5" :key="star" class="bi"
-                      :class="star <= Math.floor(product.rating) ? 'bi-star-fill' : 'bi-star'">
-                    </span>
+                      :class="star <= Math.floor(product.rating) ? 'bi-star-fill' : 'bi-star'"></span>
                     <span class="review-count">({{ product.reviewCount }})</span>
                   </div>
                   <div v-if="product.freeShipping" class="text-success">Kargo Ücretsiz</div>
                 </div>
 
                 <!-- Sağ Alt Kısımda Sil Butonu -->
-                <button class="btn btn-danger delete-button" @click="deleteProduct(index)">
+                <button class="btn btn-danger delete-button" @click="deleteProduct(product.id)">
                   <i class="bi bi-trash"></i>Sil
                 </button>
               </div>
@@ -105,7 +104,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+import { defineComponent, ref, computed, onMounted } from 'vue';
+import { getFirestore, collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+
+const db = getFirestore();
 
 export default defineComponent({
   name: 'Favorites',
@@ -114,44 +116,29 @@ export default defineComponent({
     const selectedCategory = ref('Tümü');
 
     // Favori ürünler dizisi
-    const favoriteProducts = ref([
-      {
-        name: 'Samsung M471A1G44AB0-CWE 8GB DDR4 3200 MHz CL22 Ram',
-        price: '749,70',
-        image: 'https://n11scdn.akamaized.net/a1/215/12/84/38/08/IMG-3197337719207569763.jpg',
-        rating: 4.5,
-        reviewCount: 120,
-        freeShipping: true,
-        category: 'Elektronik',
-      },
-      {
-        name: 'Asus Tuf Gaming A15 FA506NF-HN052 R5-7535HS 8 GB 512 GB SSD RTX2050 15.6" Dos FHD Dizüstü Bilgisayar',
-        price: '22.499,00',
-        image: 'https://n11scdn.akamaized.net/a1/215/02/19/77/58/IMG-3490028796769805532.jpg',
-        rating: 4.8,
-        reviewCount: 65,
-        freeShipping: false,
-        category: 'Elektronik',
-      },
-      {
-        name: 'Taç Lisanslı Galatasaray Parçalı Logo Pamuk Çift Kişilik Nevresim Takımı',
-        price: '1.788',
-        image: 'https://n11scdn.akamaized.net/a1/215/15/27/10/04/IMG-518728452022904852.jpg',
-        rating: 5.0,
-        reviewCount: 1905,
-        freeShipping: true,
-        category: 'Spor & Outdoor',
-      },
-      {
-        name: 'Nike Zoom Mercurial Superfly 9 Elite Sg-pro Anti-clog Traction Erkek Sarı Krampon Çim Zemin Dj5166-780',
-        price: '6.249,94',
-        image: 'https://n11scdn.akamaized.net/a1/215/06/26/84/28/IMG-2799795862318680292.jpg',
-        rating: 3.7,
-        reviewCount: 57,
-        freeShipping: false,
-        category: 'Spor & Outdoor',
-      },
-    ]);
+    const favoriteProducts = ref<any[]>([]);
+
+    // Firestore'dan verileri çekme
+    const fetchFavorites = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, 'Favorites'));
+        favoriteProducts.value = querySnapshot.docs.map(doc => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            name: data.name || 'Bilinmeyen Ürün',
+            image: (data.image && data.image[0]) || '/placeholder.jpg', // İlk görseli al veya varsayılan görsel
+            price: Number(data.newPrice || 0), // Eksikse varsayılan fiyat
+            category: data.category || 'Diğer',
+            rating: data.rating || 0,
+            reviewCount: data.reviews || 0,
+            freeShipping: data.freeShipping || false,
+          };
+        });
+      } catch (error) {
+        console.error("Veriler alınırken bir hata oluştu:", error);
+      }
+    };
 
     // Ürünleri kategorilere göre gruplandırma
     const groupedProducts = computed(() => {
@@ -164,8 +151,10 @@ export default defineComponent({
       }, { Tümü: favoriteProducts.value });
     });
 
-    const deleteProduct = (index: number) => {
-      favoriteProducts.value.splice(index, 1);
+    // Firestore'dan ürünü silme
+    const deleteProduct = async (id: string) => {
+      await deleteDoc(doc(db, 'Favorites', id));
+      favoriteProducts.value = favoriteProducts.value.filter(product => product.id !== id);
     };
 
     const activeMenuItem = ref('');
@@ -184,13 +173,19 @@ export default defineComponent({
       'Şifre Değiştir',
       'Üyelik İptali',
     ]);
+
     const categoryIcons: Record<string, string> = {
       Elektronik: "bi bi-phone",
       "Spor & Outdoor": "bi bi-bicycle",
       Moda: "bi bi-bag",
       Ev: "bi bi-house",
-      Otomotiv: "bi bi-car-front-fill"
+      Otomotiv: "bi bi-car-front-fill",
     };
+
+    // onMounted içinde fetchFavorites çağrılıyor
+    onMounted(() => {
+      fetchFavorites();
+    });
 
     return {
       activeTab,
@@ -205,6 +200,7 @@ export default defineComponent({
   },
 });
 </script>
+
 
 <style scoped>
 /* Genel Yapı */
@@ -463,9 +459,9 @@ export default defineComponent({
 }
 
 .menu-icon {
-  margin-left: auto; /* Sağa yaslanmasını sağlar */
+  margin-left: auto;
+  /* Sağa yaslanmasını sağlar */
   color: #5D3EBC;
   font-size: 1.5rem;
 }
-
 </style>
